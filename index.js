@@ -13,13 +13,6 @@ requireDir(dbConfig.modelsPath);
 
 app.use(bodyParser.json());
 
-app.post('/create', async (req, res) => {
-  const User = mongoose.model('User');
-
-  console.log(req.body);
-  await User.create(req.body);
-
-  return res.send();
-});
+app.use('/api', require('./app/routes'));
 
 app.listen(3000);
