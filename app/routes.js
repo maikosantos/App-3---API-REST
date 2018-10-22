@@ -20,9 +20,14 @@ routes.post('/signup', controllers.authController.signup);
 routes.use(authMiddleware);
 
 /**
+ * Users
+ */
+routes.put('/users', controllers.userController.update);
+
+/**
  * Tweets
  */
-routes.delete('/tweets', controllers.tweetController.create);
+routes.post('/tweets', controllers.tweetController.create);
 routes.delete('/tweets/:id', controllers.tweetController.destroy);
 
 module.exports = routes;
