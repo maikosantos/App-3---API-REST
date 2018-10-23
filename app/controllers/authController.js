@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const sendMail = require('../services/mailer');
 
 const User = mongoose.model('User');
 
@@ -35,6 +36,22 @@ module.exports = {
       }
 
       const user = await User.create(req.body);
+
+      /**
+       * Pode tirar o await para agilizar a criação da conta do user, pois o Node vai
+       * processar o envio do e-mail em background sem problemas.
+       * */
+
+      await sendMail({
+        from: 'Maiko Silva <maikossamster@gmail.com>',
+        to: user.email,
+        subject: `Bem-vindo ao RocketTweeter, ${user.name}`,
+        template: 'auth/register',
+        context: {
+          name: user.name,
+          username: user.username,
+        },
+      });
 
       return res.json({
         user,
